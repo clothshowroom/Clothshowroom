@@ -42,10 +42,14 @@ function HeroGarmentCard({
     el.style.setProperty("--mouse-x", `${(x * 100).toFixed(1)}%`);
     el.style.setProperty("--mouse-y", `${(y * 100).toFixed(1)}%`);
 
-    const rotX = ((y - 0.5) * -11).toFixed(2);
-    const rotY = ((x - 0.5) * 11).toFixed(2);
+    // Lively 3D tilt & dynamic float response to cursor position
+    const rotX = ((y - 0.5) * -18).toFixed(2);
+    const rotY = ((x - 0.5) * 18).toFixed(2);
+    const transX = ((x - 0.5) * 10).toFixed(1);
+    const transY = (((y - 0.5) * 10) - 8).toFixed(1);
+
     setTiltStyle(
-      `perspective(850px) rotateX(${rotX}deg) rotateY(${rotY}deg) scale3d(1.025, 1.025, 1.025)`
+      `perspective(900px) translate3d(${transX}px, ${transY}px, 0) rotateX(${rotX}deg) rotateY(${rotY}deg) scale3d(1.045, 1.045, 1.045)`
     );
   };
 
@@ -57,17 +61,16 @@ function HeroGarmentCard({
     <article
       ref={cardRef}
       data-hero-wing
-      data-cursor="couture"
       onMouseEnter={() => playSilkRustle()}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       style={{
         transform: tiltStyle,
         transition: tiltStyle
-          ? "transform 0.08s ease-out"
-          : "transform 0.45s var(--ease-atelier), box-shadow 0.45s ease",
+          ? "transform 0.1s cubic-bezier(0.2, 0, 0.2, 1), box-shadow 0.2s ease"
+          : "transform 0.55s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.45s ease",
       }}
-      className="royal-glass-card card-specular-glare group flex flex-col justify-between rounded-[20px] p-2.5 transition-all duration-300 hover:shadow-[0_22px_44px_-16px_rgba(24,62,47,0.32)]"
+      className="royal-glass-card card-specular-glare group flex flex-col justify-between rounded-[20px] p-2.5 cursor-pointer will-change-transform hover:shadow-[0_28px_50px_-14px_rgba(20,53,40,0.45),0_0_24px_rgba(215,183,116,0.25)]"
     >
       <button
         type="button"

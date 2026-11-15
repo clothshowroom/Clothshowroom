@@ -155,6 +155,20 @@ export function Navbar() {
           {/* Right Emerald Capsule + Audio & Unveil Actions (Desktop) */}
           <div className="hidden lg:flex items-center gap-2">
             {/* Audio Ambiance Synthesizer Pill */}
+                        <button
+              type="button"
+              onClick={() => {
+                try {
+                  sessionStorage.removeItem("atelier_unveiled_v4");
+                } catch {}
+                window.dispatchEvent(new CustomEvent("atelier:reopen_gates"));
+              }}
+              title="Reopen Royal Palace Gates"
+              aria-label="Reopen Royal Palace Gates"
+              className="flex h-9 w-9 items-center justify-center rounded-full border border-brass/45 bg-obsidian text-[#D7B774]"
+            >
+              <RotateCcw className="h-4 w-4" />
+            </button>
             <button
               type="button"
               onClick={toggleSound}
@@ -210,6 +224,22 @@ export function Navbar() {
                 </React.Fragment>
               ))}
             </nav>
+
+                        {/* Replay Palace Welcome Gates */}
+            <button
+              type="button"
+              onClick={() => {
+                try {
+                  sessionStorage.removeItem("atelier_unveiled_v4");
+                } catch {}
+                window.dispatchEvent(new CustomEvent("atelier:reopen_gates"));
+              }}
+              title="Reopen Royal Palace Gates"
+              aria-label="Reopen Royal Palace Gates"
+              className="royal-glass-emerald flex h-8 w-8 items-center justify-center rounded-full border border-brass/50 text-[#D7B774] shadow-sm transition-all duration-300 hover:scale-110 hover:border-brass hover:shadow-[0_0_16px_rgba(215,183,116,0.45)]"
+            >
+              <RotateCcw className="h-3.5 w-3.5" />
+            </button>
 
             {/* Admin Studio */}
             <Link
