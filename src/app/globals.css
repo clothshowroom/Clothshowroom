@@ -1,0 +1,300 @@
+@import "tailwindcss";
+
+:root {
+  --surface-ivory: #fbf6eb;
+  --surface-stone: #f1e7d2;
+  --surface-obsidian: #153528;
+  --surface-charcoal: #1e4636;
+  --surface-emerald-deep: #0f261c;
+  --ink-primary: #1a241f;
+  --ink-muted: #655d4e;
+  --ink-light: #fbf6eb;
+  --accent-brass: #b99149;
+  --accent-gold-bright: #d7b774;
+  --hairline-gold: rgba(185, 145, 73, 0.38);
+  --ease-atelier: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@theme inline {
+  --color-ivory: var(--surface-ivory);
+  --color-stone: var(--surface-stone);
+  --color-obsidian: var(--surface-obsidian);
+  --color-charcoal: var(--surface-charcoal);
+  --color-ink: var(--ink-primary);
+  --color-taupe: var(--ink-muted);
+  --color-brass: var(--accent-brass);
+  --font-display: var(--font-display-cinzel), Georgia, serif;
+  --font-sans: var(--font-sans-jakarta), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-serif-cormorant), Georgia, serif;
+  --font-mono: var(--font-mono-jetbrains), ui-monospace, monospace;
+}
+
+html {
+  scroll-behavior: smooth;
+  background-color: var(--surface-ivory);
+  color: var(--ink-primary);
+}
+
+body {
+  background-color: var(--surface-ivory);
+  color: var(--ink-primary);
+  font-family: var(--font-sans-jakarta), ui-sans-serif, system-ui, sans-serif;
+  overflow-x: clip;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background-color: rgba(185, 145, 73, 0.28);
+  color: inherit;
+}
+
+/* Delicate Mughal / Botanical Damask Parchment Backdrop */
+.parchment-botanical-bg {
+  background-color: #fbf6eb;
+  background-image:
+    radial-gradient(circle at 50% 0%, rgba(255, 252, 245, 0.9), transparent 65%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220' viewBox='0 0 220 220'%3E%3Cg fill='none' stroke='%23b99149' stroke-width='0.9' opacity='0.14'%3E%3Cpath d='M110 20c8 18 24 28 24 44 0 12-10 20-24 20s-24-8-24-20c0-16 16-26 24-44z'/%3E%3Cpath d='M110 136c8 18 24 28 24 44 0 12-10 20-24 20s-24-8-24-20c0-16 16-26 24-44z'/%3E%3Cpath d='M20 110c18-8 28-24 44-24 12 0 20 10 20 24s-8 24-20 24c-16 0-26-16-44-24z'/%3E%3Cpath d='M136 110c18-8 28-24 44-24 12 0 20 10 20 24s-8 24-20 24c-16 0-26-16-44-24z'/%3E%3Ccircle cx='110' cy='110' r='8'/%3E%3Cpath d='M32 32c14 4 22 14 26 26-12-4-22-12-26-26zM188 32c-14 4-22 14-26 26 12-4 22-12 26-26zM32 188c14-4 22-14 26-26-12 4-22 12-26 26zM188 188c-14-4-22-14-26-26 12 4 22 12 26 26z'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: auto, 240px 240px;
+}
+
+/* Subtle editorial film-grain overlay across dark sections */
+.atelier-grain {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+}
+
+/* Emerald Royal Pill & Frosted Parchment Nav */
+.liquid-glass {
+  position: relative;
+  overflow: hidden;
+  background: rgba(24, 62, 47, 0.94);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(201, 165, 96, 0.45);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.14),
+    0 8px 24px -10px rgba(15, 38, 28, 0.35);
+}
+
+.liquid-glass-light {
+  position: relative;
+  background: rgba(251, 246, 235, 0.92);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(185, 145, 73, 0.32);
+}
+
+/* Royal Frosted Glassmorphism Tokens */
+.royal-glass-card {
+  position: relative;
+  background: linear-gradient(
+    145deg,
+    rgba(255, 253, 249, 0.88) 0%,
+    rgba(247, 239, 222, 0.76) 100%
+  );
+  -webkit-backdrop-filter: blur(18px);
+  backdrop-filter: blur(18px);
+  border: 1px solid rgba(215, 183, 116, 0.42);
+  box-shadow:
+    inset 0 1px 1.5px rgba(255, 255, 255, 0.95),
+    0 16px 38px -14px rgba(21, 53, 40, 0.16);
+  transition:
+    transform 0.4s var(--ease-atelier),
+    box-shadow 0.4s var(--ease-atelier),
+    border-color 0.4s ease;
+}
+
+.royal-glass-card:hover {
+  border-color: rgba(215, 183, 116, 0.75);
+  box-shadow:
+    inset 0 1px 2px rgba(255, 255, 255, 1),
+    0 24px 48px -14px rgba(21, 53, 40, 0.25);
+}
+
+.royal-glass-emerald {
+  position: relative;
+  background: linear-gradient(
+    135deg,
+    rgba(21, 53, 40, 0.88) 0%,
+    rgba(15, 38, 28, 0.96) 100%
+  );
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(215, 183, 116, 0.45);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    0 14px 38px -10px rgba(10, 26, 19, 0.55);
+}
+
+/* Subtle Specular Sheen on Interactive Fashion Cards */
+.card-specular-glare {
+  position: relative;
+  overflow: hidden;
+}
+
+.card-specular-glare::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  pointer-events: none;
+  background: radial-gradient(
+    circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    rgba(255, 255, 255, 0.22) 0%,
+    rgba(215, 183, 116, 0.08) 35%,
+    transparent 65%
+  );
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+.card-specular-glare:hover::before {
+  opacity: 1;
+}
+
+/* Royal Cream Card Frame */
+.card-royal-parchment {
+  background: linear-gradient(180deg, #fffdf9 0%, #f9f2e3 100%);
+  border: 1px solid rgba(185, 145, 73, 0.42);
+  box-shadow:
+    0 10px 28px -16px rgba(24, 62, 47, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.85);
+}
+
+/* Brushed Heirloom Gold Pill Button */
+.btn-royal-gold {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: linear-gradient(180deg, #d7b774 0%, #c19a50 56%, #a88038 100%);
+  color: #1f1709;
+  border: 1px solid rgba(255, 244, 214, 0.48);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.42),
+    0 6px 18px -8px rgba(132, 95, 33, 0.55);
+  transition:
+    transform 0.25s var(--ease-atelier),
+    filter 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.btn-royal-gold:hover {
+  filter: brightness(1.06);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.55),
+    0 10px 24px -8px rgba(132, 95, 33, 0.65);
+}
+
+/* Sweep-shine couture CTA finish */
+.btn-couture {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  transition:
+    transform 0.25s var(--ease-atelier),
+    background-color 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.btn-couture::after,
+.btn-royal-gold::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(
+    115deg,
+    transparent 20%,
+    rgba(255, 255, 255, 0.32) 48%,
+    transparent 76%
+  );
+  transform: translateX(-130%);
+  transition: transform 0.65s var(--ease-atelier);
+}
+
+.btn-couture:hover::after,
+.btn-royal-gold:hover::after {
+  transform: translateX(130%);
+}
+
+.btn-couture:active,
+.btn-royal-gold:active {
+  transform: scale(0.98);
+}
+
+/* Seamless editorial marquee */
+@keyframes atelier-marquee {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.animate-atelier-marquee {
+  display: flex;
+  width: max-content;
+  animation: atelier-marquee 38s linear infinite;
+}
+
+.animate-atelier-marquee:hover {
+  animation-play-state: paused;
+}
+
+/* Haute Couture Ambient Float & Breathing Keyframes */
+@keyframes royal-float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+.animate-royal-float {
+  animation: royal-float 5s ease-in-out infinite;
+}
+
+@keyframes botanical-breathe {
+  0%, 100% {
+    opacity: 0.88;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.025);
+  }
+}
+
+.animate-botanical-breathe {
+  animation: botanical-breathe 6s ease-in-out infinite;
+}
+
+@keyframes gold-halo {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(215, 183, 116, 0.35);
+  }
+  50% {
+    box-shadow: 0 0 20px 4px rgba(215, 183, 116, 0.45);
+  }
+}
+
+.animate-gold-halo {
+  animation: gold-halo 4s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .animate-atelier-marquee {
+    animation: none;
+  }
+  .btn-couture::after,
+  .btn-royal-gold::after {
+    display: none;
+  }
+}
