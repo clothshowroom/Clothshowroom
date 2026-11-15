@@ -1,5 +1,6 @@
 export function getSupabaseUrl(): string {
-  return process.env.NEXT_PUBLIC_SUPABASE_URL?.trim() ?? "";
+  const raw = process.env.NEXT_PUBLIC_SUPABASE_URL?.trim() ?? "";
+  return raw.replace(/\/rest\/v1\/?$/, "").replace(/\/+$/, "");
 }
 
 export function getSupabaseAnonKey(): string {
