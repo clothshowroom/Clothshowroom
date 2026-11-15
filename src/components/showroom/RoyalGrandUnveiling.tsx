@@ -11,7 +11,7 @@ import {
   playGoldClick,
 } from "@/lib/sound";
 
-const SESSION_KEY = "atelier_unveiled_v4";
+const STORAGE_KEY = "atelier_palace_unveiled_v1";
 
 /**
  * Antique Brass Door Knocker / Haveli Ring SVG
@@ -66,7 +66,7 @@ export function RoyalGrandUnveiling() {
     if (opening) return;
     setOpening(true);
 
-    // Immediately restore body scroll so page becomes interactive
+    // Immediately restore body scroll so page becomes fully interactive
     if (typeof document !== "undefined") {
       document.body.style.overflow = "";
     }
@@ -75,13 +75,15 @@ export function RoyalGrandUnveiling() {
       playRoyalChime();
     }
 
+    // Persist permanently in localStorage so user NEVER sees it repeatedly ("sirf ek hi bar na ki bar bar")
     try {
-      sessionStorage.setItem(SESSION_KEY, "true");
+      localStorage.setItem(STORAGE_KEY, "true");
+      sessionStorage.setItem(STORAGE_KEY, "true");
     } catch {
       // Ignore private browsing error
     }
 
-    // Allow door swing animation (1.35s) to complete before unmounting from DOM
+    // Allow door swing animation (1.35s) to complete smoothly before unmounting from DOM
     setTimeout(() => {
       setVisible(false);
       setOpening(false);
@@ -101,47 +103,79 @@ export function RoyalGrandUnveiling() {
     handleOpen();
   };
 
+  // First time visitor check & smooth automatic opening
   useEffect(() => {
     setMounted(true);
     setSoundOn(isSoundEnabled());
 
-    const handleReopen = () => {
-      setVisible(true);
-      setOpening(false);
-      if (typeof document !== "undefined") {
-        document.body.style.overflow = "hidden";
-      }
-    };
-    window.addEventListener("atelier:reopen_gates", handleReopen);
-
+    // Check if user has already visited in this browser
     let hasSeen = false;
     try {
-      hasSeen = sessionStorage.getItem(SESSION_KEY) === "true";
+      hasSeen =
+        localStorage.getItem(STORAGE_KEY) === "true" ||
+        sessionStorage.getItem(STORAGE_KEY) === "true";
     } catch {
       hasSeen = false;
     }
 
-    if (!hasSeen) {
-      setVisible(true);
+    // If user already visited, NEVER show again ("na ki bar bar")
+    if (hasSeen) {
+      setVisible(false);
+      return;
+    }
+
+    // First-time visitor: show the palace gates welcoming ceremony once
+    setVisible(true);
+    if (typeof document !== "undefined") {
       document.body.style.overflow = "hidden";
     }
 
+    // Immediately mark as seen so refreshes or quick navigations never get stuck
+    try {
+      localStorage.setItem(STORAGE_KEY, "true");
+      sessionStorage.setItem(STORAGE_KEY, "true");
+    } catch {}
+
+    // Auto-open smoothly after 1.8s so visitor sees the royal greeting,
+    // and then the palace gates gracefully swing open into the showroom!
+    const autoOpenTimer = setTimeout(() => {
+      handleOpen();
+    }, 1800);
+
     return () => {
-      document.body.style.overflow = "";
+      clearTimeout(autoOpenTimer);
+      if (typeof document !== "undefined") {
+        document.body.style.overflow = "";
+      }
     };
-  }, []);
+  }, [handleOpen]);
 
   // Replay event listener for Navbar & Footer buttons
   useEffect(() => {
-    const onReplay = () => {
+    let replayTimer: NodeJS.Timeout | null = null;
+
+    const handleReopen = () => {
       setOpening(false);
       setVisible(true);
-      document.body.style.overflow = "hidden";
+      if (typeof document !== "undefined") {
+        document.body.style.overflow = "hidden";
+      }
+
+      // When manually replayed, auto-open smoothly after 2s or upon click
+      replayTimer = setTimeout(() => {
+        handleOpen();
+      }, 2000);
     };
 
-    window.addEventListener("replay-atelier-unveiling", onReplay);
-    return () => window.removeEventListener("replay-atelier-unveiling", onReplay);
-  }, []);
+    window.addEventListener("atelier:reopen_gates", handleReopen);
+    window.addEventListener("replay-atelier-unveiling", handleReopen);
+
+    return () => {
+      if (replayTimer) clearTimeout(replayTimer);
+      window.removeEventListener("atelier:reopen_gates", handleReopen);
+      window.removeEventListener("replay-atelier-unveiling", handleReopen);
+    };
+  }, [handleOpen]);
 
   // Keyboard shortcut: Any key (Space, Enter, Esc, Down arrow) unlocks doors
   useEffect(() => {
